@@ -1,12 +1,13 @@
 import React from 'react'
-import { Text, ImageBackground, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet, Image, Text } from "react-native";
 import LoginForm from '../Components/LoginForm';
-
 
 const Login = ({ navigation }) => {
 
     return (
         <ImageBackground source={require('../assets/backgrounds/background1.png')} style={{ flex: 1 }} resizeMode='cover'>
+            <Image source={require('../assets/icon.png')} style={styles.image} />
+            <Text style={styles.pageTitle}>Login</Text>
             <LoginForm moveToRegister={() => navigation.navigate("Register")} />
         </ImageBackground>
     );
@@ -15,13 +16,17 @@ const Login = ({ navigation }) => {
 export default Login
 
 const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
+    image: {
         position: 'absolute',
-        bottom: '30%',
-        right: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20,
+        width: 100,
+        height: 100,
+        marginTop: 40,
+        alignSelf: 'center',
+    },
+    pageTitle: {
+        position: 'absolute',
+        top: 200,
+        alignSelf: 'center',
+        fontSize: 24
     }
 })

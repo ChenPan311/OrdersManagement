@@ -1,9 +1,13 @@
 import React from 'react'
-import { Text, View, ImageBackground, TouchableOpacity, StyleSheet, Button, TextInput } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet, TextInput } from "react-native";
 import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
+import { signIn } from '../Actions/UserActions'
+import { useDispatch } from 'react-redux';
 
 const LoginForm = ({ moveToRegister }) => {
+
+    const dispatch = useDispatch();
     const { handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
             email: '',
@@ -11,10 +15,8 @@ const LoginForm = ({ moveToRegister }) => {
         }
     });
     const onSubmit = data => {
-        console.log(data);
+        dispatch(signIn(data.email, data.password));
     };
-
-    console.log('errors', errors);
 
     return (
         <View style={styles.container}>
@@ -66,9 +68,10 @@ const LoginForm = ({ moveToRegister }) => {
             </TouchableOpacity>
         </View>
     );
+
 }
 
-export default LoginForm
+export default LoginForm;
 
 const styles = StyleSheet.create({
     label: {
@@ -102,8 +105,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingTop: Constants.statusBarHeight,
         marginTop: 40,
-        paddingLeft: 120,
-        paddingRight: 20,
+        paddingHorizontal: 80,
     },
     input: {
         backgroundColor: 'white',

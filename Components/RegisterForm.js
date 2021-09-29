@@ -3,7 +3,7 @@ import { Text, View, ImageBackground, TouchableOpacity, StyleSheet, Button, Text
 import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
 
-const LoginForm = ({ goBack }) => {
+const LoginForm = () => {
     const { handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
             email: '',
@@ -139,8 +139,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingTop: Constants.statusBarHeight,
         marginTop: 40,
-        paddingLeft: 100,
-        paddingRight: 20,
+        paddingHorizontal: 60,
     },
     input: {
         backgroundColor: 'white',
