@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageBackground, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { ImageBackground, TouchableOpacity, StyleSheet, Text, KeyboardAvoidingView, View } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import RegisterForm from '../Components/RegisterForm'
 
@@ -10,8 +10,7 @@ const Register = ({ navigation }) => {
             <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
                 <AntDesign name="left" size={24} color="white" />
             </TouchableOpacity>
-            <Text style={styles.pageTitle}>Register</Text>
-            <RegisterForm />
+            <RegisterForm style={{ flex: 5 }} />
         </ImageBackground>
     )
 }
@@ -29,8 +28,9 @@ const styles = StyleSheet.create({
     },
     pageTitle: {
         position: 'absolute',
-        top: 200,
+        marginTop: 200,
         alignSelf: 'center',
-        fontSize: 24
+        fontSize: 24,
+        fontFamily: 'VarelaRound'
     }
 })

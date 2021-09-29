@@ -7,7 +7,6 @@ const Login = ({ navigation }) => {
     return (
         <ImageBackground source={require('../assets/backgrounds/background1.png')} style={{ flex: 1 }} resizeMode='cover'>
             <Image source={require('../assets/icon.png')} style={styles.image} />
-            <Text style={styles.pageTitle}>Login</Text>
             <LoginForm moveToRegister={() => navigation.navigate("Register")} />
         </ImageBackground>
     );
@@ -21,12 +20,14 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         marginTop: 40,
-        alignSelf: 'center',
+        marginLeft: 20,
+        alignSelf: 'flex-start',
     },
     pageTitle: {
-        position: 'absolute',
+        position: 'relative',
         top: 200,
         alignSelf: 'center',
-        fontSize: 24
+        fontSize: 24,
+        fontFamily: 'VarelaRound'
     }
 })

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, TextInput } from "react-native";
 import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
@@ -20,6 +20,7 @@ const LoginForm = ({ moveToRegister }) => {
 
     return (
         <View style={styles.container}>
+            <Text style={{ alignSelf: 'center', marginBottom: 40, fontSize: 30, fontFamily: 'VarelaRound' }}>Login</Text>
             <Text style={styles.label}>Email</Text>
             <Controller
                 control={control}
@@ -59,12 +60,12 @@ const LoginForm = ({ moveToRegister }) => {
 
             <TouchableOpacity style={styles.button}
                 onPress={handleSubmit(onSubmit)}>
-                <Text>Login</Text>
+                <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.textButton}
                 onPress={moveToRegister}>
-                <Text style={{ color: 'white' }}>Register</Text>
+                <Text style={[styles.buttonText, { color: 'white' }]}>Register</Text>
             </TouchableOpacity>
         </View>
     );
@@ -76,8 +77,9 @@ export default LoginForm;
 const styles = StyleSheet.create({
     label: {
         color: 'black',
-        fontSize: 16,
+        fontSize: 18,
         marginTop: 20,
+        fontFamily: 'VarelaRound',
     },
     textButton: {
         justifyContent: 'center',
@@ -89,6 +91,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
         borderColor: 'white',
+        fontFamily: 'VarelaRound'
     },
     button: {
         justifyContent: 'center',
@@ -99,6 +102,9 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         backgroundColor: 'rgba(255,255,255,0.6)',
         borderRadius: 4,
+    },
+    buttonText: {
+        fontFamily: 'VarelaRound'
     },
     container: {
         flex: 1,
@@ -114,8 +120,10 @@ const styles = StyleSheet.create({
         height: 50,
         padding: 10,
         borderRadius: 5,
+        fontFamily: 'VarelaRound'
     },
     error: {
         color: 'red',
+        fontFamily: 'VarelaRound'
     }
 });

@@ -20,6 +20,7 @@ const LoginForm = () => {
 
     return (
         <View style={styles.container}>
+            <Text style={{ alignSelf: 'center', marginBottom: 40, fontSize: 30, fontFamily: 'VarelaRound' }}>Register</Text>
             <Text style={styles.label}>Email</Text>
             <Controller
                 control={control}
@@ -99,7 +100,7 @@ const LoginForm = () => {
 
             <TouchableOpacity style={styles.button}
                 onPress={handleSubmit(onSubmit)}>
-                <Text>Register</Text>
+                <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
         </View>
     );
@@ -112,6 +113,7 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 16,
         marginTop: 20,
+        fontFamily: 'VarelaRound'
     },
     textButton: {
         justifyContent: 'center',
@@ -134,12 +136,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.6)',
         borderRadius: 4,
     },
+    buttonText: {
+        fontFamily: 'VarelaRound'
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
         paddingTop: Constants.statusBarHeight,
         marginTop: 40,
-        paddingHorizontal: 60,
+        paddingHorizontal: 40,
     },
     input: {
         backgroundColor: 'white',
@@ -148,9 +153,11 @@ const styles = StyleSheet.create({
         height: 50,
         padding: 10,
         borderRadius: 5,
+        fontFamily: 'VarelaRound'
     },
     error: {
         color: 'red',
+        fontFamily: 'VarelaRound'
     },
     row: {
         flexDirection: 'row',
