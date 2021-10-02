@@ -1,13 +1,17 @@
 import React from 'react'
-import { ImageBackground, StyleSheet, Image, Text } from "react-native";
-import LoginForm from '../Components/LoginForm';
+import { ImageBackground, StyleSheet, Image, Text, Button } from "react-native";
+import LoginForm from '../../Components/LoginForm';
+import { store } from '../../store'
 
 const Login = ({ navigation }) => {
 
     return (
-        <ImageBackground source={require('../assets/backgrounds/background1.png')} style={{ flex: 1 }} resizeMode='cover'>
-            <Image source={require('../assets/icon.png')} style={styles.image} />
+        <ImageBackground source={require('../../assets/backgrounds/background1.png')} style={{ flex: 1 }} resizeMode='cover'>
+            <Image source={require('../../assets/icon.png')} style={styles.image} />
             <LoginForm moveToRegister={() => navigation.navigate("Register")} />
+            <Button title="Click" onPress={() => {
+                console.log(store.getState());
+            }} />
         </ImageBackground>
     );
 }

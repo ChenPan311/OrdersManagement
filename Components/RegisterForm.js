@@ -1,9 +1,15 @@
 import React from 'react'
-import { Text, View, ImageBackground, TouchableOpacity, StyleSheet, Button, TextInput } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet, TextInput } from "react-native";
+import { useDispatch } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form'
+import { register } from '../Actions/UserActions';
 import Constants from 'expo-constants';
+import axios from 'axios';
+
+const apiPath = "http://192.168.1.230:3000/api";
 
 const LoginForm = () => {
+    const dispatch = useDispatch();
     const { handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
             email: '',
@@ -12,8 +18,12 @@ const LoginForm = () => {
             password: ''
         }
     });
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = async data => {
+        axios.post(`${apiPath}/user/register`, data)
+            .then((res) => {
+                if (res.status === 200)
+                    dispatch(register(res.data.user));
+            }).catch((err) => alert(err));
     };
 
     console.log('errors', errors);

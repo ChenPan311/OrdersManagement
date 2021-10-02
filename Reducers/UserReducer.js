@@ -8,22 +8,9 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL
 } from '../Actions/ActionTypes'
-import * as SecureStore from 'expo-secure-store';
-
-const save = async (key, value) => {
-    return await SecureStore.setItemAsync(key, value);
-}
-
-const getValue = async (key) => {
-    return await SecureStore.getItemAsync(key);
-}
-
-const remove = async (key) => {
-    return await SecureStore.deleteItemAsync(key);
-}
 
 initialState = {
-    token: getValue('token'),
+    token: null,
     isAuthenticated: null,
     isLoading: false,
     user: null,
@@ -41,24 +28,23 @@ const UserReducer = (state = initialState, action) => {
             console.log("USER_LOADED");
             return {
                 ...state,
+                token: action.payload.token,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload.user
+                user: action.payload.user._id
             };
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
-            save('token', state.payload.token)
             return {
                 ...state,
-                ...action.payload,
                 isAuthenticated: true,
-                isLoading: false
+                isLoading: false,
+                user: action.payload.data
             };
         case AUTH_ERROR:
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
-            remove('token');
             return {
                 ...state,
                 token: null,

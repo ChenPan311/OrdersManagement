@@ -1,12 +1,12 @@
 import React from 'react'
 import { ImageBackground, TouchableOpacity, StyleSheet, Text, KeyboardAvoidingView, View } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
-import RegisterForm from '../Components/RegisterForm'
+import RegisterForm from '../../Components/RegisterForm'
 
 const Register = ({ navigation }) => {
 
     return (
-        <ImageBackground source={require('../assets/backgrounds/background1.png')} style={{ flex: 1 }} resizeMode='cover'>
+        <ImageBackground source={require('../../assets/backgrounds/background1.png')} style={{ flex: 1 }} resizeMode='cover'>
             <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
                 <AntDesign name="left" size={24} color="white" />
             </TouchableOpacity>

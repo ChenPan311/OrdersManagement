@@ -4,6 +4,9 @@ import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
 import { signIn } from '../Actions/UserActions'
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
+
+const apiPath = "http://192.168.1.230:3000/api";
 
 const LoginForm = ({ moveToRegister }) => {
 
@@ -15,7 +18,11 @@ const LoginForm = ({ moveToRegister }) => {
         }
     });
     const onSubmit = data => {
-        dispatch(signIn(data.email, data.password));
+        axios.post(`${apiPath}/user/login`, { email: data.email, password: data.password })
+            .then((res) => {
+                if (res.status === 200)
+                    dispatch(signIn(res.data._id, res.data.token));
+            }).catch((err) => alert(err.response.data));
     };
 
     return (

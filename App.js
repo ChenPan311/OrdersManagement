@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from './Screens/Login';
-import Register from './Screens/Register';
+import AuthNavigation from './Navigation/AuthNavigation';
+import MainNavigation from './Navigation/MainNavigation';
 import { Provider } from 'react-redux';
-import store from './store'
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store'
 import * as Font from 'expo-font';
 import { ActivityIndicator } from 'react-native';
-
-const Stack = createNativeStackNavigator();
 
 export default function App() {
 
@@ -20,17 +18,21 @@ export default function App() {
     }).then(() => setFontLoaded(true));
   }, []);
 
-  if (fontLoaded)
+  if (fontLoaded) {
     return (
       <Provider store={store}>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <PersistGate loading={null} persistor={persistor}>
+          <NavigationContainer>
+            {store.getState().user.isAuthenticated ?
+              <MainNavigation />
+              :
+              <AuthNavigation />
+            }
+          </NavigationContainer>
+        </PersistGate>
       </Provider>
     );
+  }
   else return (<ActivityIndicator size='large' color='black' style={{ flex: 1, alignSelf: 'center' }} />)
 }
 
