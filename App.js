@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthNavigation from './Navigation/AuthNavigation';
-import MainNavigation from './Navigation/MainNavigation';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store'
 import * as Font from 'expo-font';
 import { ActivityIndicator } from 'react-native';
+import RootNavigation from './Navigation/RootNavigation';
 
 export default function App() {
 
@@ -23,11 +22,7 @@ export default function App() {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
-            {store.getState().user.isAuthenticated ?
-              <MainNavigation />
-              :
-              <AuthNavigation />
-            }
+            <RootNavigation />
           </NavigationContainer>
         </PersistGate>
       </Provider>

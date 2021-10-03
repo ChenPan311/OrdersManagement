@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, TextInput } from "react-native";
 import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
 import { signIn } from '../Actions/UserActions'
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
-const LoginForm = ({ moveToRegister }) => {
+const LoginForm = ({ moveToRegister, dispatch }) => {
 
-    const dispatch = useDispatch();
     const { handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
             email: '',
@@ -79,7 +78,7 @@ const LoginForm = ({ moveToRegister }) => {
 
 }
 
-export default LoginForm;
+export default connect()(LoginForm);
 
 const styles = StyleSheet.create({
     label: {
