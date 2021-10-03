@@ -32,6 +32,7 @@ const MainNavigation = () => {
             },
             tabBarActiveTintColor: '#ABE2C5',
             tabBarInactiveTintColor: 'gray',
+            headerShown: false,
         })}>
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Orders" component={Orders} />
