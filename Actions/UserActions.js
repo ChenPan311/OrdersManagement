@@ -11,9 +11,14 @@ export const signIn = (id, token) => ({
     }
 });
 
-export const register = (data) => ({
+export const register = (id, token) => ({
     type: REGISTER_SUCCESS,
-    payload: { 'data': data },
+    payload: {
+        user: {
+            '_id': id
+        },
+        'token': token,
+    },
 });
 
 export const signOut = () => ({ type: LOGOUT_SUCCESS });

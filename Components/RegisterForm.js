@@ -18,11 +18,11 @@ const LoginForm = () => {
             password: ''
         }
     });
-    const onSubmit = async data => {
+    const onSubmit = data => {
         axios.post(`${apiPath}/user/register`, data)
             .then((res) => {
                 if (res.status === 200)
-                    dispatch(register(res.data.user));
+                    dispatch(register(res.data._id, res.data.token));
             }).catch((err) => alert(err));
     };
 

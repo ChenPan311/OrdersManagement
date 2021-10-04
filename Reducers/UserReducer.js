@@ -6,8 +6,6 @@ import {
 
 const initialState = {
     token: null,
-    isAuthenticated: null,
-    isLoading: false,
     user: null,
 };
 
@@ -17,24 +15,19 @@ const UserReducer = (state = initialState, action) => {
             return {
                 ...state,
                 token: action.payload.token,
-                isAuthenticated: true,
-                isLoading: false,
                 user: action.payload.user._id
             };
         case REGISTER_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: true,
-                isLoading: false,
-                user: action.payload.data
+                token: action.payload.token,
+                user: action.payload.user._id
             };
         case LOGOUT_SUCCESS:
             return {
                 ...state,
                 token: null,
                 user: null,
-                isAuthenticated: false,
-                isLoading: false
             };
         default:
             return state;

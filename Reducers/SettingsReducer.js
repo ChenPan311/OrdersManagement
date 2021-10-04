@@ -1,6 +1,6 @@
 import { LOAD_SETTINGS, SAVE_SETTINGS } from "../Actions/ActionTypes";
 
-initialState = {
+const initialState = {
     maxOrders: 100,
     autoDelete: 21,
 };

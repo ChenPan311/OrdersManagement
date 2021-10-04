@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, Button, ImageBackground, StyleSheet, TextInput } from 'react-native'
 import { signOut } from '../../Actions/UserActions'
+import { saveSettings } from '../../Actions/SettingsActions'
 import { store } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Settings = ({ navigation }) => {
     const dispatch = useDispatch();
     const { maxOrders, autoDelete } = useSelector(state => state.settings);
+    const [maxOrdersField, setMaxOrders] = useState(maxOrders);
+    const [autoDeleteField, setautoDeleteField] = useState(autoDelete);
     return (
         <ImageBackground source={require('../../assets/backgrounds/background2.png')} style={{ flex: 1, justifyContent: 'space-around' }} resizeMode='cover'>
             <Text style={styles.title}>Settings Page</Text>
@@ -18,23 +22,36 @@ const Settings = ({ navigation }) => {
                 <View style={styles.inputsContainer}>
                     <Text style={styles.label}>Max number of orders</Text>
                     <TextInput
-                        value={maxOrders.toString()}
+                        value={maxOrdersField.toString()}
                         style={styles.input}
-                        placeholder='number' />
+                        placeholder='number'
+                        onChangeText={text => setMaxOrders(text)} />
                 </View>
                 <View style={styles.inputsContainer}>
                     <Text style={styles.label}>Auto delete after (days) :</Text>
                     <TextInput
-                        value={autoDelete.toString()}
+                        value={autoDeleteField.toString()}
                         style={styles.input}
-                        placeholder='number' />
+                        placeholder='number'
+                        onChangeText={text => setautoDeleteField(text)} />
                 </View>
             </View>
             <Button title="LogOut" onPress={() => {
                 dispatch(signOut());
             }} />
-            <Button title="get state" onPress={async () => {
+            <Button title="get state" onPress={() => {
                 console.log(store.getState());
+            }} />
+
+            <Button title="Save" onPress={() => {
+                dispatch(saveSettings(maxOrdersField, autoDeleteField));
+            }} />
+
+            <Button title="Clear" onPress={() => {
+                AsyncStorage.getAllKeys()
+                    .then(keys => AsyncStorage.multiRemove(keys))
+                    .then(() => alert('success'));
+
             }} />
         </ImageBackground>
     )
