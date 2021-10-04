@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react'
 import { store } from '../store';
 import AuthNavigation from './AuthNavigation'
 import MainNavigation from './MainNavigation'
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const RootNavigation = () => {
-    const [logged, setLogged] = useState(store.getState().user.token);
+    const { token } = useSelector(state => state.user)
+    const [logged, setLogged] = useState(token ? true : false);
 
     useEffect(() => {
         console.log("called");
         isLogged();
-    }, []);
+    }, [token]);
 
     const isLogged = () => {
-        store.getState().user.token ? setLogged(true) : setLogged(false);
+        token ? setLogged(true) : setLogged(false);
     };
 
     return (
@@ -24,4 +25,4 @@ const RootNavigation = () => {
     )
 }
 
-export default connect()(RootNavigation);
+export default RootNavigation;

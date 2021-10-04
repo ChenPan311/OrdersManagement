@@ -3,12 +3,14 @@ import { Text, View, TouchableOpacity, StyleSheet, TextInput } from "react-nativ
 import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
 import { signIn } from '../Actions/UserActions'
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
-const LoginForm = ({ moveToRegister, dispatch }) => {
+const LoginForm = ({ moveToRegister }) => {
+
+    const dispatch = useDispatch();
 
     const { handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -78,7 +80,7 @@ const LoginForm = ({ moveToRegister, dispatch }) => {
 
 }
 
-export default connect()(LoginForm);
+export default LoginForm;
 
 const styles = StyleSheet.create({
     label: {

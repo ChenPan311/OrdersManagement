@@ -1,10 +1,12 @@
 import React from 'react'
 import { View, Text, Button, ImageBackground, StyleSheet, TextInput } from 'react-native'
-import { connect } from 'react-redux'
 import { signOut } from '../../Actions/UserActions'
 import { store } from '../../store'
+import { useDispatch, useSelector } from 'react-redux'
 
-const Settings = ({ navigation, dispatch }) => {
+const Settings = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const { maxOrders, autoDelete } = useSelector(state => state.settings);
     return (
         <ImageBackground source={require('../../assets/backgrounds/background2.png')} style={{ flex: 1, justifyContent: 'space-around' }} resizeMode='cover'>
             <Text style={styles.title}>Settings Page</Text>
@@ -15,11 +17,17 @@ const Settings = ({ navigation, dispatch }) => {
                 </View>
                 <View style={styles.inputsContainer}>
                     <Text style={styles.label}>Max number of orders</Text>
-                    <TextInput style={styles.input} placeholder='number' />
+                    <TextInput
+                        value={maxOrders.toString()}
+                        style={styles.input}
+                        placeholder='number' />
                 </View>
                 <View style={styles.inputsContainer}>
                     <Text style={styles.label}>Auto delete after (days) :</Text>
-                    <TextInput style={styles.input} placeholder='number' />
+                    <TextInput
+                        value={autoDelete.toString()}
+                        style={styles.input}
+                        placeholder='number' />
                 </View>
             </View>
             <Button title="LogOut" onPress={() => {
@@ -32,7 +40,7 @@ const Settings = ({ navigation, dispatch }) => {
     )
 }
 
-export default connect()(Settings);
+export default Settings;
 
 const styles = StyleSheet.create({
     title: {
@@ -64,7 +72,8 @@ const styles = StyleSheet.create({
         height: 50,
         padding: 10,
         borderRadius: 5,
-        fontFamily: 'VarelaRound'
+        fontFamily: 'VarelaRound',
+        textAlign: 'center'
     },
     seprator: {
         backgroundColor: 'black',
