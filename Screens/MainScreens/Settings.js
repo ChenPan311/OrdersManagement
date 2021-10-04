@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { View, Text, Button, ImageBackground, StyleSheet, TextInput } from 'react-native'
+import { View, Text, ImageBackground, StyleSheet, TextInput } from 'react-native'
 import { signOut } from '../../Actions/UserActions'
 import { saveSettings } from '../../Actions/SettingsActions'
 import { store } from '../../store'
+import Button from '../../Components/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -11,6 +12,7 @@ const Settings = ({ navigation }) => {
     const { maxOrders, autoDelete } = useSelector(state => state.settings);
     const [maxOrdersField, setMaxOrders] = useState(maxOrders);
     const [autoDeleteField, setautoDeleteField] = useState(autoDelete);
+
     return (
         <ImageBackground source={require('../../assets/backgrounds/background2.png')} style={{ flex: 1, justifyContent: 'space-around' }} resizeMode='cover'>
             <Text style={styles.title}>Settings Page</Text>

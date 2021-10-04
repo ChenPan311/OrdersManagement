@@ -1,10 +1,11 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 import { useDispatch } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form'
 import { register } from '../Actions/UserActions';
 import Constants from 'expo-constants';
 import axios from 'axios';
+import Button from './Button';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
@@ -108,10 +109,7 @@ const LoginForm = () => {
             />
             {errors.password?.type === 'required' && <Text style={styles.error}>Password is required</Text>}
 
-            <TouchableOpacity style={styles.button}
-                onPress={handleSubmit(onSubmit)}>
-                <Text style={styles.buttonText}>Register</Text>
-            </TouchableOpacity>
+            <Button title="Register" onPress={handleSubmit(onSubmit)} style={{ marginTop: 40 }} />
         </View>
     );
 }

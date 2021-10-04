@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import Button from './Button';
 import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
 import { signIn } from '../Actions/UserActions'
@@ -66,10 +67,7 @@ const LoginForm = ({ moveToRegister }) => {
             />
             {errors.password?.type === 'required' && <Text style={styles.error}>Password is required</Text>}
 
-            <TouchableOpacity style={styles.button}
-                onPress={handleSubmit(onSubmit)}>
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
+            <Button title="Login" onPress={handleSubmit(onSubmit)} style={{ marginTop: 40 }} />
 
             <TouchableOpacity style={styles.textButton}
                 onPress={moveToRegister}>
@@ -102,14 +100,7 @@ const styles = StyleSheet.create({
         fontFamily: 'VarelaRound'
     },
     button: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
         marginTop: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        backgroundColor: 'rgba(255,255,255,0.6)',
-        borderRadius: 4,
     },
     buttonText: {
         fontFamily: 'VarelaRound'
@@ -128,7 +119,7 @@ const styles = StyleSheet.create({
         height: 50,
         padding: 10,
         borderRadius: 5,
-        fontFamily: 'VarelaRound'
+        fontFamily: 'VarelaRound',
     },
     error: {
         color: 'red',
