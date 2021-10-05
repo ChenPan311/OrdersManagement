@@ -1,17 +1,29 @@
 import React from 'react'
 import { View, Text, ImageBackground } from 'react-native'
 import CubeButton from '../../Components/CubeButton'
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 const Home = ({ navigation }) => {
     return (
         <ImageBackground source={require('../../assets/backgrounds/background2.png')} style={{ flex: 1, justifyContent: 'space-evenly' }}>
             <View style={{ flex: 1 }}>
-                <Text>blalbal</Text>
-                <Text>blalbal</Text>
-                <Text>blalbal</Text>
-                <Text>blalbal</Text>
-                <Text>blalbal</Text>
-                <Text>blalbal</Text>
+                <View style={{ flex: 7, alignItems: 'center', justifyContent: 'center' }}>
+                    <AnimatedCircularProgress
+                        size={200}
+                        width={20}
+                        fill={70}
+                        tintColor="#12D54F"
+                        backgroundColor="gray"
+                        padding={0}>
+                        {
+                            (fill) => (
+                                <Text style={{ fontSize: 40, fontFamily: 'VarelaRound' }}>
+                                    {fill}%
+                                </Text>
+                            )
+                        }
+                    </AnimatedCircularProgress>
+                </View>
             </View>
             <View style={{
                 flex: 1,
