@@ -1,10 +1,13 @@
-import React, { useRef } from 'react'
-import { StatusBar, ImageBackground, View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
+import React, { useRef, useEffect } from 'react'
+import { StatusBar, ImageBackground, View, Text, FlatList, TouchableOpacity, StyleSheet, Button } from 'react-native'
 import OrderForm from '../../Components/OrderForm'
 import BottomSheet from 'reanimated-bottom-sheet'
 import OrderItem from '../../Components/OrderItem'
-import { data } from '../../assets/data'
+import { useSelector, useDispatch } from 'react-redux'
+import { filterOrders } from '../../Actions/OrdersActions'
 import { AntDesign } from '@expo/vector-icons'
+import FilterBar from '../../Components/FilterBar'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Orders = () => {
     const renderContent = () => (
@@ -19,11 +22,27 @@ const Orders = () => {
     );
 
     const sheetRef = useRef(null);
+    const orders = useSelector(state => state.orders);
+    const filter = useSelector(state => state.filter);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(filterOrders(filter.status));
+        console.log('in Orders ' + filter.status);
+    }, [filter])
 
     return (
         <ImageBackground source={require('../../assets/backgrounds/background2.png')} style={{ flex: 1 }}>
             <StatusBar barStyle='light-content' />
             <Text>Orders</Text>
+            {/* <Button title="Wipe" onPress={() => {
+                AsyncStorage.getAllKeys()
+                    .then(keys => AsyncStorage.multiRemove(keys))
+                    .then(() => alert('success'));
+            }} /> */}
+            <View style={{ margin: 10, padding: 10 }}>
+                <FilterBar value={filter} />
+            </View>
             <BottomSheet ref={sheetRef}
                 snapPoints={[450, 300, 0]}
                 borderRadius={10}
@@ -33,13 +52,14 @@ const Orders = () => {
             />
 
             <FlatList
-                data={data}
+                data={orders.filteredOrders}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-
             />
             <View style={{ position: 'absolute', bottom: 20, right: 20 }}>
-                <TouchableOpacity style={styles.addButton} onPress={() => sheetRef.current.snapTo(0)}>
+                <TouchableOpacity style={styles.addButton} onPress={() => {
+                    sheetRef.current.snapTo(0)
+                }}>
                     <AntDesign name='addfile' size={24} />
                 </TouchableOpacity>
             </View>

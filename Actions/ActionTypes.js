@@ -15,4 +15,4 @@ export const UPDATE_ORDER = "UPDATE_ORDER"
 export const DELETE_ORDER = "DELETE_ORDER"
 
 // Filter actions
-export const STATUS_CHANGE = "STATUS_CHANGE"
+export const FILTER_CHANGE = "FILTER_CHANGE"

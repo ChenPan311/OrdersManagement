@@ -1,7 +1,8 @@
 import { LOAD_ORDERS, ADD_ORDER, UPDATE_ORDER, DELETE_ORDER, FILTER_ORDERS } from "../Actions/ActionTypes";
-
+import { data } from '../assets/data'
 const initialState = {
-    orders: [],
+    orders: data,
+    filteredOrders: data
 };
 
 const OrdersReducer = (state = initialState, action) => {
@@ -11,13 +12,21 @@ const OrdersReducer = (state = initialState, action) => {
                 orders: action.payload
             }
         case FILTER_ORDERS:
-            return {
-                orders: state.orders.filter((order) => {
-                    order.status === action.payload
-                })
-            }
+            if (action.payload !== 'all')
+                return {
+                    ...state,
+                    filteredOrders: state.orders.filter((order) => {
+                        return order.status == action.payload
+                    })
+                }
+            else
+                return {
+                    ...state,
+                    filteredOrders: data
+                }
         case ADD_ORDER:
             return {
+                ...state,
                 orders: [
                     ...state,
                     action.payload
@@ -25,6 +34,7 @@ const OrdersReducer = (state = initialState, action) => {
             }
         case UPDATE_ORDER:
             return {
+                ...state,
                 orders: state.orders.map((order) => {
                     (order.id === action.payload.id)
                         ? { ...order, status: action.payload.status }
@@ -33,6 +43,7 @@ const OrdersReducer = (state = initialState, action) => {
             }
         case DELETE_ORDER:
             return {
+                ...state,
                 orders: state.orders.filter((order) => {
                     order.id !== action.payload
                 })
