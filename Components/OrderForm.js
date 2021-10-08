@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
-const OrderForm = () => {
+const OrderForm = ({ sheetRef }) => {
 
     const { handleSubmit, reset, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -204,7 +204,10 @@ const OrderForm = () => {
                 </View>
                 <View style={[styles.row, { marginVertical: 40 }]}>
                     <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-                    <Button title="Cancel" />
+                    <Button title="Cancel" onPress={() => {
+                        reset();
+                        sheetRef.current.snapTo(2)
+                    }} />
                 </View>
             </View>
         </ScrollView>
