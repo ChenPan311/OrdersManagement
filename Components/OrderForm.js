@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, Image } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import Button from './Button'
@@ -11,7 +11,7 @@ const apiPath = "http://192.168.1.230:3000/api";
 
 const OrderForm = ({ sheetRef }) => {
 
-    const { handleSubmit, reset, control, formState: { errors } } = useForm({
+    const { handleSubmit, reset, control, formState: { errors }, getValues, setValue } = useForm({
         defaultValues: {
             clientName: "",
             phoneNumber: "",
@@ -23,13 +23,31 @@ const OrderForm = ({ sheetRef }) => {
             isPaid: 1,
             paymentMethod: 2,
             image: "",
-            status: "Open",
+            status: "open",
         }
     });
 
     const onSubmit = data => {
+        data.isPaid == 0 ? data.isPaid = true : data.isPaid = false
+        data.paymentMethod == 0 ?
+            data.paymentMethod = 'other' : data.paymentMethod == 1 ?
+                data.paymentMethod = 'card' : data.paymentMethod = 'cash'
         console.log(data);
     }
+
+    const getDetails = () => {
+        axios.post(`${apiPath}/utils/get_product_details`, { 'catalogNumber': getValues('catalogNumber') })
+            .then((response) => {
+                // console.log(response.data);
+                const { image, name } = response.data;
+                setValue('productName', name);
+                setValue('image', image.trim());
+                setImgae(image.trim());
+            });
+    }
+
+    const [image, setImgae] = useState('https://megasport.co.il/pub/media/catalog/product/cache/4161146eb64d6ce2b25df18919b6fded/_/t/_tensaur_run_c_11_.jpg');
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -52,7 +70,9 @@ const OrderForm = ({ sheetRef }) => {
                         />
                         {errors.catalogNumber?.type === 'required' && <Text style={styles.error}>catalogNumber is required</Text>}
                     </View>
-                    <View style={{ flex: 1 }}></View>
+                    <View style={{ marginTop: 40, paddingHorizontal: 10 }}>
+                        <Button title="V" onPress={getDetails} />
+                    </View>
                     <View style={{ flex: 1 }}>
                         <Text style={styles.label}>Size</Text>
                         <Controller
@@ -88,7 +108,7 @@ const OrderForm = ({ sheetRef }) => {
                         />
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Image style={styles.picture} source={{ uri: 'https://megasport.co.il/pub/media/catalog/product/cache/4161146eb64d6ce2b25df18919b6fded/_/t/_tensaur_run_c_11_.jpg' }} />
+                        <Image style={styles.picture} source={{ uri: image }} />
                     </View>
                 </View>
                 <View style={styles.row}>
@@ -242,13 +262,14 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
     },
     picture: {
-        height: 120,
-        width: 120,
-        alignSelf: 'center',
+        height: undefined,
+        aspectRatio: 1,
+        width: '100%',
         borderRadius: 20,
-        margin: 20,
+        margin: 10,
     }
 })

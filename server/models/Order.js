@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+        required: true,
+    },
     clientName: {
         type: String,
         required: true,
@@ -50,7 +54,7 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        default: 'Open'
+        default: 'open'
     }
 });
 
