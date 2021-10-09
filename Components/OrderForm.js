@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, Image } from 'react-native'
+import { useSelector, useDispatch } from 'react-redux'
 import { ScrollView } from 'react-native-gesture-handler';
 import Button from './Button'
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
 import axios from 'axios';
+import { addOrder } from '../Actions/OrdersActions';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
 const OrderForm = ({ sheetRef }) => {
+    const { user } = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
     const { handleSubmit, reset, control, formState: { errors }, getValues, setValue } = useForm({
         defaultValues: {
@@ -32,7 +36,11 @@ const OrderForm = ({ sheetRef }) => {
         data.paymentMethod == 0 ?
             data.paymentMethod = 'other' : data.paymentMethod == 1 ?
                 data.paymentMethod = 'card' : data.paymentMethod = 'cash'
-        console.log(data);
+        data.userId = user;
+        axios.post(`${apiPath}/database/add`, data)
+            .then((response) => {
+                dispatch(addOrder(response.data));
+            });
     }
 
     const getDetails = () => {
@@ -83,7 +91,6 @@ const OrderForm = ({ sheetRef }) => {
                                     onBlur={onBlur}
                                     onChangeText={value => onChange(value)}
                                     value={value}
-                                    keyboardType='decimal-pad'
                                 />
                             )}
                             name="size"

@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import DropDownPicker from 'react-native-dropdown-picker';
 import IconButton from './IconButton';
+import { useDispatch } from 'react-redux';
+import { deleteOrder, updateOrder } from '../Actions/OrdersActions';
+import axios from 'axios';
 
 const COLORS = {
     OPEN: '#FFA8A8',
@@ -10,11 +13,14 @@ const COLORS = {
     ARRIVED: '#ABE2C5'
 }
 
+const apiPath = "http://192.168.1.230:3000/api";
+
 const OrderItem = ({ data }) => {
 
     const [expend, setExpended] = useState(false);
     const [open, setOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(data.status);
+    const dispatch = useDispatch();
 
 
     const [items, setItems] = useState([
@@ -23,12 +29,28 @@ const OrderItem = ({ data }) => {
         { label: 'Arrived', value: 'arrived' }
     ]);
 
+    const onSave = () => {
+        axios.post(`${apiPath}/database/update`, { _id: data._id, status: dropdownValue })
+            .then((response) => {
+                console.log("update " + data._id);
+                dispatch(updateOrder(data._id, dropdownValue));
+            })
+    }
+
+    const onDelete = () => {
+        axios.post(`${apiPath}/database/delete`, { _id: data._id })
+            .then((response) => {
+                console.log("delete " + response.data);
+                dispatch(deleteOrder(data._id));
+            })
+    }
+
     return (
         expend ?
             // Expended view
             <View style={styles.expendedContainer}>
                 <View style={styles.innerContainer}>
-                    <Text style={[styles.label, { marginStart: 10, marginTop: 50, marginBottom: 10 }]}>{data.date}</Text>
+                    <Text style={[styles.label, { marginStart: 10, marginTop: 50, marginBottom: 10 }]}>{new Date(data.date).toDateString()}</Text>
                     <View style={[styles.imageContainer, { flexDirection: 'row' }]}>
                         <Image style={styles.bigPicture} source={{ uri: data.image }} />
                         <View style={{ flex: 1, marginStart: 10, justifyContent: 'center' }}>
@@ -77,10 +99,9 @@ const OrderItem = ({ data }) => {
                                 containerStyle={{ flex: 1 }}
                             />
                         </View>
-                        <View style={[styles.row, { justifyContent: 'space-around', marginVertical: 10 }]}>
-                            <IconButton title="Save" icon="save" />
-                            <IconButton title="Delete" icon="delete" />
-
+                        <View style={[styles.row, { justifyContent: 'space-around', marginTop: 20, marginBottom: 10 }]}>
+                            <IconButton title="Save" icon="save" onPress={onSave} />
+                            <IconButton title="Delete" icon="delete" onPress={onDelete} />
                         </View>
                     </View>
                 </View>
@@ -90,7 +111,7 @@ const OrderItem = ({ data }) => {
                             COLORS.PENDING : COLORS.ARRIVED
                 }]}
                     onPress={() => setExpended(!expend)}>
-                    <AntDesign name='upcircle' size={24} style={{ marginEnd: 5 }} />
+                    <AntDesign name='upcircle' size={24} />
                 </TouchableOpacity>
             </View>
             :
@@ -103,7 +124,7 @@ const OrderItem = ({ data }) => {
                     <View style={styles.detailsContainer}>
                         <Text style={styles.label}>Product Name : {data.productName}</Text>
                         <Text style={styles.label}>Status : {data.status}</Text>
-                        <Text style={styles.label}>Date : {data.date}</Text>
+                        <Text style={styles.label}>Date : {new Date(data.date).toDateString()}</Text>
                     </View>
                 </View>
                 <TouchableOpacity style={[styles.sideArrow, {

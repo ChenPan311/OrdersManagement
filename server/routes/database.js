@@ -3,7 +3,7 @@ const verify = require('./verifyToken');
 const Order = require('../models/Order');
 
 
-router.get('/all', verify, async (req, res) => {
+router.post('/all', async (req, res) => {
     try {
         const orders = await Order.find({ userID: req.body.userID });
         res.status(200).send(orders);
@@ -12,7 +12,7 @@ router.get('/all', verify, async (req, res) => {
     }
 });
 
-router.post('/add', verify, async (req, res) => {
+router.post('/add', async (req, res) => {
     const order = new Order({
         userId: req.body.userId,
         clientName: req.body.clientName,
@@ -34,7 +34,26 @@ router.post('/add', verify, async (req, res) => {
     }
 });
 
-router.patch('/update', verify, async (req, res) => {
+router.post('/update', async (req, res) => {
+    try {
+        const order = await Order.findOneAndUpdate({ _id: req.body._id }, { status: req.body.status },
+            { new: true });
+        res.status(200).send(order);
+    } catch (error) {
+        res.status(400).send("Error");
+    }
+});
+
+router.post('/delete', async (req, res) => {
+    try {
+        Order.findOneAndDelete({ _id: req.body._id }, (err, success) => {
+            if (err)
+                return res.status(400).send("Error in Deletion");
+            else return res.status(200).send(success._id);
+        })
+    } catch (error) {
+        return res.status(400).send("Error in Deletion");
+    }
 
 });
 
