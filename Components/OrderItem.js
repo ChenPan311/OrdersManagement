@@ -30,15 +30,15 @@ const OrderItem = ({ data }) => {
     ]);
 
     const onSave = () => {
-        axios.post(`${apiPath}/database/update`, { _id: data._id, status: dropdownValue })
+        axios.patch(`${apiPath}/database/${data._id}`, { status: dropdownValue })
             .then((response) => {
-                console.log("update " + data._id);
+                console.log("update " + response.data._id);
                 dispatch(updateOrder(data._id, dropdownValue));
             })
     }
 
     const onDelete = () => {
-        axios.post(`${apiPath}/database/delete`, { _id: data._id })
+        axios.delete(`${apiPath}/database/${data._id}`)
             .then((response) => {
                 console.log("delete " + response.data);
                 dispatch(deleteOrder(data._id));

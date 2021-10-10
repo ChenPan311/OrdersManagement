@@ -33,7 +33,7 @@ const Orders = () => {
     useEffect(() => {
         // Load all orders
         console.log("Orders")
-        axios.post(`${apiPath}/database/all`, user.user)
+        axios.get(`${apiPath}/database/${user.user}`)
             .then((response) => {
                 dispatch(loadOrders(response.data))
             })

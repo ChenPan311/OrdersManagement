@@ -37,7 +37,7 @@ const OrderForm = ({ sheetRef }) => {
             data.paymentMethod = 'other' : data.paymentMethod == 1 ?
                 data.paymentMethod = 'card' : data.paymentMethod = 'cash'
         data.userId = user;
-        axios.post(`${apiPath}/database/add`, data)
+        axios.post(`${apiPath}/database/`, data)
             .then((response) => {
                 dispatch(addOrder(response.data));
             });
