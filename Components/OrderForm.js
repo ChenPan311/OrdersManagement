@@ -42,6 +42,8 @@ const OrderForm = ({ sheetRef }) => {
         })
             .then((response) => {
                 dispatch(addOrder(response.data));
+                reset();
+                sheetRef.current.snapTo(2)
             }).catch(err => alert(err.message));
     }
 
@@ -53,8 +55,6 @@ const OrderForm = ({ sheetRef }) => {
                 setValue('productName', name);
                 setValue('image', image.trim());
                 setImgae(image.trim());
-                reset();
-                sheetRef.current.snapTo(2)
             });
     }
 
