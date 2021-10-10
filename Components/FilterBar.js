@@ -11,6 +11,10 @@ const FilterBar = () => {
     const [value, setValue] = useState(filter.status);
     const [order, setOrder] = useState(1);
 
+    useEffect(() => {
+        setValue(filter.status);
+    }, [filter])
+
     return (
         <View style={styles.container}>
             <Text style={{ flex: 1, textAlign: 'center' }}>Filter by</Text>
