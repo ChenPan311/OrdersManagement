@@ -12,7 +12,7 @@ import { addOrder } from '../Actions/OrdersActions';
 const apiPath = "http://192.168.1.230:3000/api";
 
 const OrderForm = ({ sheetRef }) => {
-    const { user } = useSelector(state => state.user);
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
     const { handleSubmit, reset, control, formState: { errors }, getValues, setValue } = useForm({
@@ -36,11 +36,13 @@ const OrderForm = ({ sheetRef }) => {
         data.paymentMethod == 0 ?
             data.paymentMethod = 'other' : data.paymentMethod == 1 ?
                 data.paymentMethod = 'card' : data.paymentMethod = 'cash'
-        data.userId = user;
-        axios.post(`${apiPath}/database/`, data)
+        data.userId = user.user;
+        axios.post(`${apiPath}/database/`, data, {
+            headers: { 'auth-token': user.token }
+        })
             .then((response) => {
                 dispatch(addOrder(response.data));
-            });
+            }).catch(err => alert(err.message));
     }
 
     const getDetails = () => {
@@ -51,6 +53,8 @@ const OrderForm = ({ sheetRef }) => {
                 setValue('productName', name);
                 setValue('image', image.trim());
                 setImgae(image.trim());
+                reset();
+                sheetRef.current.snapTo(2)
             });
     }
 

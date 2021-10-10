@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import DropDownPicker from 'react-native-dropdown-picker';
 import IconButton from './IconButton';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteOrder, updateOrder } from '../Actions/OrdersActions';
 import axios from 'axios';
 
@@ -22,6 +22,7 @@ const OrderItem = ({ data }) => {
     const [dropdownValue, setDropdownValue] = useState(data.status);
     const dispatch = useDispatch();
 
+    const user = useSelector(state => state.user)
 
     const [items, setItems] = useState([
         { label: 'Open', value: 'open' },
@@ -30,19 +31,23 @@ const OrderItem = ({ data }) => {
     ]);
 
     const onSave = () => {
-        axios.patch(`${apiPath}/database/${data._id}`, { status: dropdownValue })
+        axios.patch(`${apiPath}/database/${data._id}`, { status: dropdownValue }, {
+            headers: { 'auth-token': user.token }
+        })
             .then((response) => {
                 console.log("update " + response.data._id);
                 dispatch(updateOrder(data._id, dropdownValue));
-            })
+            }).catch(err => alert(err.message))
     }
 
     const onDelete = () => {
-        axios.delete(`${apiPath}/database/${data._id}`)
+        axios.delete(`${apiPath}/database/${data._id}`, {
+            headers: { 'auth-token': user.token }
+        })
             .then((response) => {
                 console.log("delete " + response.data);
                 dispatch(deleteOrder(data._id));
-            })
+            }).catch(err => alert(err.message))
     }
 
     return (

@@ -1,10 +1,8 @@
 const router = require('express').Router();
 const verify = require('./verifyToken');
 const Order = require('../models/Order');
-const { default: axios } = require('axios');
 
-
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', verify, async (req, res) => {
     try {
         const orders = await Order.find({ userId: req.params.userId });
         res.status(200).send(orders);
@@ -13,7 +11,7 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', verify, async (req, res) => {
     const order = new Order(req.body);
     try {
         const savedOrder = await order.save();
@@ -23,7 +21,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', verify, async (req, res) => {
     try {
         const order = await Order.findOneAndUpdate({ _id: req.params.id }, { status: req.body.status },
             { new: true });
@@ -33,7 +31,7 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
     try {
         Order.findOneAndDelete({ _id: req.params.id }, (err, success) => {
             if (err)
