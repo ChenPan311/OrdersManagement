@@ -13,6 +13,8 @@ const apiPath = "http://192.168.1.230:3000/api";
 
 const OrderForm = ({ sheetRef }) => {
     const user = useSelector(state => state.user);
+    const orders = useSelector(state => state.orders);
+    const settings = useSelector(state => state.settings)
     const dispatch = useDispatch();
 
     const { handleSubmit, reset, control, formState: { errors }, getValues, setValue } = useForm({
@@ -32,19 +34,23 @@ const OrderForm = ({ sheetRef }) => {
     });
 
     const onSubmit = data => {
-        data.isPaid == 0 ? data.isPaid = true : data.isPaid = false
-        data.paymentMethod == 0 ?
-            data.paymentMethod = 'other' : data.paymentMethod == 1 ?
-                data.paymentMethod = 'card' : data.paymentMethod = 'cash'
-        data.userId = user.user;
-        axios.post(`${apiPath}/database/`, data, {
-            headers: { 'auth-token': user.token }
-        })
-            .then((response) => {
-                dispatch(addOrder(response.data));
-                reset();
-                sheetRef.current.snapTo(2)
-            }).catch(err => alert(err.message));
+        if (orders.orders.length < settings.maxOrders) {
+            data.isPaid == 0 ? data.isPaid = true : data.isPaid = false
+            data.paymentMethod == 0 ?
+                data.paymentMethod = 'other' : data.paymentMethod == 1 ?
+                    data.paymentMethod = 'card' : data.paymentMethod = 'cash'
+            data.userId = user.user;
+            axios.post(`${apiPath}/database/`, data, {
+                headers: { 'auth-token': user.token }
+            })
+                .then((response) => {
+                    dispatch(addOrder(response.data));
+                    reset();
+                    sheetRef.current.snapTo(2)
+                }).catch(err => alert(err.message));
+        } else {
+            alert(`Max orders of ${settings.maxOrders}`)
+        }
     }
 
     const getDetails = () => {

@@ -4,13 +4,10 @@ import OrderForm from '../../Components/OrderForm'
 import BottomSheet from 'reanimated-bottom-sheet'
 import OrderItem from '../../Components/OrderItem'
 import { useSelector, useDispatch } from 'react-redux'
-import { filterOrders, loadOrders } from '../../Actions/OrdersActions'
+import { filterOrders } from '../../Actions/OrdersActions'
 import { AntDesign } from '@expo/vector-icons'
 import FilterBar from '../../Components/FilterBar'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import axios from 'axios'
-
-const apiPath = "http://192.168.1.230:3000/api";
 
 const Orders = () => {
     const renderContent = () => (
@@ -27,19 +24,7 @@ const Orders = () => {
     const sheetRef = useRef(null);
     const orders = useSelector(state => state.orders);
     const filter = useSelector(state => state.filter);
-    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        // Load all orders
-        axios.get(`${apiPath}/database/${user.user}`, {
-            headers: { 'auth-token': user.token }
-        })
-            .then((response) => {
-                dispatch(loadOrders(response.data))
-                dispatch(filterOrders(filter.status, filter.order));
-            }).catch(err => alert(err));
-    }, [])
 
     useEffect(() => {
         // On filter changed
