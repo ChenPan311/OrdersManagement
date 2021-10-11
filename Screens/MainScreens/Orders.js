@@ -43,7 +43,7 @@ const Orders = () => {
 
     useEffect(() => {
         // On filter changed
-        dispatch(filterOrders(filter.status));
+        dispatch(filterOrders(filter.status, filter.order));
     }, [filter])
 
     return (
@@ -54,8 +54,8 @@ const Orders = () => {
                 AsyncStorage.getAllKeys()
                     .then(keys => AsyncStorage.multiRemove(keys))
                     .then(() => alert('success'));
-            }} />
-            <Button title="State" onPress={() => {
+            }} /> */}
+            {/* <Button title="State" onPress={() => {
                 console.log(orders);
             }} /> */}
             <FilterBar />

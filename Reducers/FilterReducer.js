@@ -2,7 +2,7 @@ import { FILTER_CHANGE } from "../Actions/ActionTypes";
 
 const initialState = {
     status: "all",
-    order: 1
+    order: 0
 };
 
 const FilterReducer = (state = initialState, action) => {

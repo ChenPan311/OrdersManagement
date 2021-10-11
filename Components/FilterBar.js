@@ -9,7 +9,7 @@ const FilterBar = () => {
     const filter = useSelector(state => state.filter);
     const dispatch = useDispatch();
     const [value, setValue] = useState(filter.status);
-    const [order, setOrder] = useState(1);
+    const [order, setOrder] = useState(filter.order);
 
     useEffect(() => {
         setValue(filter.status);

@@ -24,7 +24,7 @@ const LoginForm = ({ moveToRegister }) => {
             .then((res) => {
                 if (res.status === 200)
                     dispatch(signIn(res.data._id, res.data.token));
-            }).catch((err) => alert(err.response.data));
+            }).catch((err) => alert(err.message));
     };
 
     return (

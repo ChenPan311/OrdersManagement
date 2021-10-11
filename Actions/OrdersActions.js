@@ -5,9 +5,9 @@ export const loadOrders = (orders) => ({
     payload: orders
 });
 
-export const filterOrders = (status) => ({
+export const filterOrders = (status, order) => ({
     type: FILTER_ORDERS,
-    payload: status
+    payload: { status, order }
 })
 
 export const addOrder = (order) => ({

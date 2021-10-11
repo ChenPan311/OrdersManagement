@@ -14,17 +14,26 @@ const OrdersReducer = (state = initialState, action) => {
             }
         case FILTER_ORDERS:
             if (state.orders != [])
-                if (action.payload !== 'all')
+                if (action.payload.status !== 'all')
                     return {
                         ...state,
                         filteredOrders: state.orders.filter((order) => {
-                            return order.status == action.payload
+                            return order.status == action.payload.status
+                        }).sort((a, b) => {
+                            if (action.payload.order == 0)
+                                return a.date.localeCompare(b.date);
+                            else return b.date.localeCompare(a.date);
                         })
+
                     }
                 else
                     return {
                         ...state,
-                        filteredOrders: state.orders
+                        filteredOrders: state.orders.sort((a, b) => {
+                            if (action.payload.order == 0)
+                                return a.date.localeCompare(b.date);
+                            else return b.date.localeCompare(a.date);
+                        })
                     }
         case ADD_ORDER:
             return {
