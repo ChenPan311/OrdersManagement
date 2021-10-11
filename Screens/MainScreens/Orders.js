@@ -32,12 +32,12 @@ const Orders = () => {
 
     useEffect(() => {
         // Load all orders
-        console.log('Orders');
         axios.get(`${apiPath}/database/${user.user}`, {
             headers: { 'auth-token': user.token }
         })
             .then((response) => {
                 dispatch(loadOrders(response.data))
+                dispatch(filterOrders(filter.status, filter.order));
             }).catch(err => alert(err));
     }, [])
 
