@@ -38,12 +38,12 @@ const OrdersReducer = (state = initialState, action) => {
         case ADD_ORDER:
             return {
                 orders: [
-                    ...state.orders,
-                    action.payload
+                    action.payload,
+                    ...state.orders
                 ],
                 filteredOrders: [
+                    action.payload,
                     ...state.filteredOrders,
-                    action.payload
                 ]
             }
         case UPDATE_ORDER:
