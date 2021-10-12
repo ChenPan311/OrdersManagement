@@ -29,13 +29,13 @@ const Home = ({ navigation }) => {
     return (
         <ImageBackground source={require('../../assets/backgrounds/background2.png')} style={{ flex: 1, justifyContent: 'space-evenly' }}>
             <View style={{ flex: 1 }}>
-                <View style={{ flex: 7, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', marginBottom: 10 }}>
                     <AnimatedCircularProgress
-                        size={200}
+                        size={220}
                         width={20}
                         fill={(orders.orders.length / settings.maxOrders) * 100}
-                        tintColor="#12D54F"
-                        backgroundColor="gray"
+                        tintColor="#4D9649"
+                        backgroundColor="#707070"
                         padding={0}>
                         {
                             (fill) => (
@@ -45,6 +45,7 @@ const Home = ({ navigation }) => {
                             )
                         }
                     </AnimatedCircularProgress>
+                    <Text style={{ fontSize: 30, fontFamily: 'VarelaRound', marginTop: 10 }}>{orders.orders.length}/{settings.maxOrders}</Text>
                 </View>
             </View>
             <View style={{

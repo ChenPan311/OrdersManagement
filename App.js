@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store'
 import * as Font from 'expo-font';
 import { ActivityIndicator } from 'react-native';
+import { RootSiblingParent } from 'react-native-root-siblings';
 import RootNavigation from './Navigation/RootNavigation';
 
 export default function App() {
@@ -21,9 +22,11 @@ export default function App() {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <NavigationContainer>
-            <RootNavigation />
-          </NavigationContainer>
+          <RootSiblingParent>
+            <NavigationContainer>
+              <RootNavigation />
+            </NavigationContainer>
+          </RootSiblingParent>
         </PersistGate>
       </Provider>
     );

@@ -8,6 +8,7 @@ import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
 import axios from 'axios';
 import { addOrder } from '../Actions/OrdersActions';
+import Toast from 'react-native-root-toast';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
@@ -47,6 +48,14 @@ const OrderForm = ({ sheetRef }) => {
                     dispatch(addOrder(response.data));
                     reset();
                     sheetRef.current.snapTo(2)
+                    Toast.show('Order Added', {
+                        duration: Toast.durations.SHORT,
+                        position: Toast.positions.BOTTOM,
+                        shadow: true,
+                        animation: true,
+                        hideOnPress: true,
+                        delay: 0,
+                    });
                 }).catch(err => alert(err.message));
         } else {
             alert(`Max orders of ${settings.maxOrders}`)
@@ -61,7 +70,7 @@ const OrderForm = ({ sheetRef }) => {
                 setValue('productName', name);
                 setValue('image', image.trim());
                 setImgae(image.trim());
-            });
+            }).catch(err => alert(err.message));
     }
 
     const [image, setImgae] = useState('https://megasport.co.il/pub/media/catalog/product/cache/4161146eb64d6ce2b25df18919b6fded/_/t/_tensaur_run_c_11_.jpg');
@@ -243,7 +252,7 @@ const OrderForm = ({ sheetRef }) => {
                     <Button title="Submit" onPress={handleSubmit(onSubmit)} />
                     <Button title="Cancel" onPress={() => {
                         reset();
-                        sheetRef.current.snapTo(2)
+                        sheetRef.current.snapTo(2);
                     }} />
                 </View>
             </View>

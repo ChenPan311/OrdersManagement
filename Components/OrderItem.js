@@ -5,6 +5,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import IconButton from './IconButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteOrder, updateOrder } from '../Actions/OrdersActions';
+import Toast from 'react-native-root-toast';
 import axios from 'axios';
 
 const COLORS = {
@@ -37,6 +38,14 @@ const OrderItem = ({ data }) => {
             .then((response) => {
                 console.log("update " + response.data._id);
                 dispatch(updateOrder(data._id, dropdownValue));
+                Toast.show('Order Updated', {
+                    duration: Toast.durations.SHORT,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                });
             }).catch(err => alert(err.message))
     }
 
@@ -47,6 +56,14 @@ const OrderItem = ({ data }) => {
             .then((response) => {
                 console.log("delete " + response.data);
                 dispatch(deleteOrder(data._id));
+                Toast.show('Order Deleted', {
+                    duration: Toast.durations.SHORT,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                });
             }).catch(err => alert(err.message))
     }
 
