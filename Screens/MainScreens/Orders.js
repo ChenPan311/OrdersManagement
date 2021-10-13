@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { StatusBar, ImageBackground, View, Text, FlatList, TouchableOpacity, StyleSheet, Button } from 'react-native'
+import { StatusBar, ImageBackground, View, Text, FlatList, TouchableOpacity, StyleSheet, Button, UIManager, LayoutAnimation } from 'react-native'
 import OrderForm from '../../Components/OrderForm'
 import BottomSheet from 'reanimated-bottom-sheet'
 import OrderItem from '../../Components/OrderItem'
@@ -8,6 +8,11 @@ import { filterOrders } from '../../Actions/OrdersActions'
 import { AntDesign } from '@expo/vector-icons'
 import FilterBar from '../../Components/FilterBar'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+
+if (Platform.OS === 'android') {
+    UIManager.setLayoutAnimationEnabledExperimental &&
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 const Orders = () => {
     const renderContent = () => (

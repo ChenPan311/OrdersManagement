@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import DropDownPicker from 'react-native-dropdown-picker';
 import IconButton from './IconButton';
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteOrder, updateOrder } from '../Actions/OrdersActions';
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
+import { setAnimation } from '../Utils/utils';
 
 const COLORS = {
     OPEN: '#FFA8A8',
@@ -55,6 +56,7 @@ const OrderItem = ({ data }) => {
         })
             .then((response) => {
                 console.log("delete " + response.data);
+                setAnimation();
                 dispatch(deleteOrder(data._id));
                 Toast.show('Order Deleted', {
                     duration: Toast.durations.SHORT,
@@ -70,7 +72,7 @@ const OrderItem = ({ data }) => {
     return (
         expend ?
             // Expended view
-            <View style={styles.expendedContainer}>
+            <Animated.View style={styles.expendedContainer}>
                 <View style={styles.innerContainer}>
                     <Text style={[styles.label, { marginStart: 10, marginTop: 50, marginBottom: 10 }]}>{new Date(data.date).toDateString()}</Text>
                     <View style={[styles.imageContainer, { flexDirection: 'row' }]}>
@@ -135,10 +137,10 @@ const OrderItem = ({ data }) => {
                     onPress={() => setExpended(!expend)}>
                     <AntDesign name='upcircle' size={24} />
                 </TouchableOpacity>
-            </View>
+            </Animated.View>
             :
             // Normal view
-            <View style={styles.container}>
+            <Animated.View style={styles.container}>
                 <View style={styles.rowInnerContainer}>
                     <View style={styles.imageContainer}>
                         <Image style={styles.picture} source={{ uri: data.image }} />
@@ -157,7 +159,7 @@ const OrderItem = ({ data }) => {
                     onPress={() => setExpended(!expend)} >
                     <AntDesign name='downcircle' size={24} style={{ marginEnd: 5 }} />
                 </TouchableOpacity>
-            </View>
+            </Animated.View>
     )
 }
 

@@ -59,7 +59,7 @@ const Home = ({ navigation }) => {
             }}>
                 < CubeButton title="Open"
                     value={orders.orders.filter((order) => {
-                        return order.status == "open"
+                        return order.status === "open"
                     }).length}
                     color="#FFA8A8"
                     onPress={() => {
@@ -68,7 +68,7 @@ const Home = ({ navigation }) => {
                     }} />
                 < CubeButton title="Pending"
                     value={orders.orders.filter((order) => {
-                        return order.status == "pending"
+                        return order.status === "pending"
                     }).length}
                     color="#FFFFAE"
                     onPress={() => {
@@ -77,7 +77,7 @@ const Home = ({ navigation }) => {
                     }} />
                 < CubeButton title="Arrived"
                     value={orders.orders.filter((order) => {
-                        return order.status == "arrived"
+                        return order.status === "arrived"
                     }).length}
                     color="#ABE2C5"
                     onPress={() => {

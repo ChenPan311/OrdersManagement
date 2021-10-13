@@ -8,6 +8,7 @@ import { useForm, Controller } from 'react-hook-form'
 import Constants from 'expo-constants';
 import axios from 'axios';
 import { addOrder } from '../Actions/OrdersActions';
+import { setAnimation } from '../Utils/utils';
 import Toast from 'react-native-root-toast';
 
 const apiPath = "http://192.168.1.230:3000/api";
@@ -45,6 +46,7 @@ const OrderForm = ({ sheetRef }) => {
                 headers: { 'auth-token': user.token }
             })
                 .then((response) => {
+                    setAnimation();
                     dispatch(addOrder(response.data));
                     reset();
                     sheetRef.current.snapTo(2)
