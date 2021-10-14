@@ -10,6 +10,7 @@ import axios from 'axios';
 import { addOrder } from '../Actions/OrdersActions';
 import { setAnimation } from '../Utils/utils';
 import Toast from 'react-native-root-toast';
+import { i18n } from '../Utils/i18n/supportedLanguages';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
@@ -50,7 +51,7 @@ const OrderForm = ({ sheetRef }) => {
                     dispatch(addOrder(response.data));
                     reset();
                     sheetRef.current.snapTo(2)
-                    Toast.show('Order Added', {
+                    Toast.show(i18n.t('orderAdded'), {
                         duration: Toast.durations.SHORT,
                         position: Toast.positions.BOTTOM,
                         shadow: true,
@@ -80,10 +81,10 @@ const OrderForm = ({ sheetRef }) => {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={{ alignSelf: 'center', fontSize: 30, fontFamily: 'VarelaRound' }}>New Order</Text>
+                <Text style={{ alignSelf: 'center', fontSize: 30, fontFamily: 'VarelaRound' }}>{i18n.t('newOrder')}</Text>
                 <View style={styles.row}>
                     <View style={{ flex: 3 }}>
-                        <Text style={styles.label}>Catalog Number</Text>
+                        <Text style={styles.label}>{i18n.t('catalogNumber')}</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -97,13 +98,13 @@ const OrderForm = ({ sheetRef }) => {
                             name="catalogNumber"
                             rules={{ required: true }}
                         />
-                        {errors.catalogNumber?.type === 'required' && <Text style={styles.error}>catalogNumber is required</Text>}
+                        {errors.catalogNumber?.type === 'required' && <Text style={styles.error}>{i18n.t('catalogNumberRequired')}</Text>}
                     </View>
                     <View style={{ marginTop: 40, paddingHorizontal: 10 }}>
                         <Button title="V" onPress={getDetails} />
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.label}>Size</Text>
+                        <Text style={styles.label}>{i18n.t('size')}</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -121,7 +122,7 @@ const OrderForm = ({ sheetRef }) => {
 
                 <View style={styles.row}>
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.label}>Name</Text>
+                        <Text style={styles.label}>{i18n.t('productName')}</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -141,12 +142,12 @@ const OrderForm = ({ sheetRef }) => {
                 </View>
                 <View style={styles.row}>
                     <View style={{ flex: 3 }}>
-                        <Text style={styles.label}>Payment Method</Text>
+                        <Text style={styles.label}>{i18n.t('paymentMethod')}</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, value } }) => (
                                 <SegmentedControl
-                                    values={['Cash', 'Card', 'Other']}
+                                    values={[i18n.t('cash'), i18n.t('card'), i18n.t('other')]}
                                     selectedIndex={value}
                                     backgroundColor='rgba(255,255,255,0.5)'
                                     style={{ height: 40 }}
@@ -161,12 +162,12 @@ const OrderForm = ({ sheetRef }) => {
                     </View>
                     <View style={{ flex: 1 }}></View>
                     <View style={{ flex: 2 }}>
-                        <Text style={styles.label}>Is Paid</Text>
+                        <Text style={styles.label}>{i18n.t('isPaid')}</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, value } }) => (
                                 <SegmentedControl
-                                    values={['Yes', 'No']}
+                                    values={[i18n.t('yes'), i18n.t('no')]}
                                     selectedIndex={value}
                                     backgroundColor='rgba(255,255,255,0.5)'
                                     style={{ height: 40 }}
@@ -182,7 +183,7 @@ const OrderForm = ({ sheetRef }) => {
                 </View>
                 <View style={styles.row}>
                     <View style={{ flex: 3 }}>
-                        <Text style={styles.label}>Client Name</Text>
+                        <Text style={styles.label}>{i18n.t('clientName')}</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -196,11 +197,11 @@ const OrderForm = ({ sheetRef }) => {
                             name="clientName"
                             rules={{ required: true }}
                         />
-                        {errors.clientName?.type === 'required' && <Text style={styles.error}>Name is required</Text>}
+                        {errors.clientName?.type === 'required' && <Text style={styles.error}>{i18n.t('clientNameRequired')}</Text>}
                     </View>
                     <View style={{ flex: 1 }}></View>
                     <View style={{ flex: 3 }}>
-                        <Text style={styles.label}>Phone Number</Text>
+                        <Text style={styles.label}>{i18n.t('phoneNumber')}</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -215,11 +216,11 @@ const OrderForm = ({ sheetRef }) => {
                             name="phoneNumber"
                             rules={{ required: true }}
                         />
-                        {errors.phoneNumber?.type === 'required' && <Text style={styles.error}>Phone is required</Text>}
+                        {errors.phoneNumber?.type === 'required' && <Text style={styles.error}>{i18n.t('phoneNumberRequired')}</Text>}
                     </View>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.label}>Address</Text>
+                    <Text style={styles.label}>{i18n.t('address')}</Text>
                     <Controller
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
@@ -234,7 +235,7 @@ const OrderForm = ({ sheetRef }) => {
                     />
                 </View>
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.label}>Notes</Text>
+                    <Text style={styles.label}>{i18n.t('notes')}</Text>
                     <Controller
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
@@ -251,8 +252,8 @@ const OrderForm = ({ sheetRef }) => {
                     />
                 </View>
                 <View style={[styles.row, { marginVertical: 40 }]}>
-                    <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-                    <Button title="Cancel" onPress={() => {
+                    <Button title={i18n.t('submit')} onPress={handleSubmit(onSubmit)} />
+                    <Button title={i18n.t('cancel')} onPress={() => {
                         reset();
                         sheetRef.current.snapTo(2);
                     }} />

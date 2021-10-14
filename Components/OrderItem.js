@@ -8,6 +8,7 @@ import { deleteOrder, updateOrder } from '../Actions/OrdersActions';
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
 import { setAnimation } from '../Utils/utils';
+import { i18n } from '../Utils/i18n/supportedLanguages';
 
 const COLORS = {
     OPEN: '#FFA8A8',
@@ -27,9 +28,9 @@ const OrderItem = ({ data }) => {
     const user = useSelector(state => state.user)
 
     const [items, setItems] = useState([
-        { label: 'Open', value: 'open' },
-        { label: 'Pending', value: 'pending' },
-        { label: 'Arrived', value: 'arrived' }
+        { label: i18n.t('open'), value: 'open' },
+        { label: i18n.t('pending'), value: 'pending' },
+        { label: i18n.t('arrived'), value: 'arrived' }
     ]);
 
     const onSave = () => {
@@ -39,7 +40,7 @@ const OrderItem = ({ data }) => {
             .then((response) => {
                 console.log("update " + response.data._id);
                 dispatch(updateOrder(data._id, dropdownValue));
-                Toast.show('Order Updated', {
+                Toast.show(i18n.t('orderUpdated'), {
                     duration: Toast.durations.SHORT,
                     position: Toast.positions.BOTTOM,
                     shadow: true,
@@ -58,7 +59,7 @@ const OrderItem = ({ data }) => {
                 console.log("delete " + response.data);
                 setAnimation();
                 dispatch(deleteOrder(data._id));
-                Toast.show('Order Deleted', {
+                Toast.show(i18n.t('orderDeleted'), {
                     duration: Toast.durations.SHORT,
                     position: Toast.positions.BOTTOM,
                     shadow: true,
@@ -80,38 +81,38 @@ const OrderItem = ({ data }) => {
                         <View style={{ flex: 1, marginStart: 10, justifyContent: 'center' }}>
                             <Text style={styles.label}>{data.productName}</Text>
                             <Text style={styles.label}>{data.catalogNumber}</Text>
-                            <Text style={styles.label}>Size : {data.size}</Text>
+                            <Text style={styles.label}>{i18n.t('size')} : {data.size}</Text>
                         </View>
                     </View>
                     <View style={[styles.detailsContainer, { marginTop: 10 }]}>
                         <View style={styles.row}>
-                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>Is Paid</Text>
-                            <Text style={[styles.label, { flex: 1 }]}>{data.isPaid ? "Yes" : "No"}</Text>
+                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('isPaid')}</Text>
+                            <Text style={[styles.label, { flex: 1 }]}>{data.isPaid ? i18n.t('yes') : i18n.t('no')}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>Payment Method</Text>
+                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('paymentMethod')}</Text>
                             <Text style={[styles.label, { flex: 1 }]}>{data.paymentMethod}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>Client Name </Text>
+                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('clientName')} </Text>
                             <Text style={[styles.label, { flex: 1 }]}>{data.clientName}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>Phone Number</Text>
+                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('phoneNumber')}</Text>
                             <Text style={[styles.label, { flex: 1 }]}>{data.phoneNumber}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>Address</Text>
+                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('address')}</Text>
                             <Text style={[styles.label, { flex: 1 }]}>{data.address}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>Notes</Text>
+                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('notes')}</Text>
                             <Text style={[styles.label, { flex: 1 }]}>{data.notes}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>Status</Text>
+                            <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('status')}</Text>
                             <DropDownPicker
-                                placeholder={"Status"}
+                                placeholder={i18n.t('status')}
                                 open={open}
                                 value={dropdownValue}
                                 items={items}
@@ -124,8 +125,8 @@ const OrderItem = ({ data }) => {
                             />
                         </View>
                         <View style={[styles.row, { justifyContent: 'space-around', marginTop: 20, marginBottom: 10 }]}>
-                            <IconButton title="Save" icon="save" onPress={onSave} />
-                            <IconButton title="Delete" icon="delete" onPress={onDelete} />
+                            <IconButton title={i18n.t('save')} icon="save" onPress={onSave} />
+                            <IconButton title={i18n.t('delete')} icon="delete" onPress={onDelete} />
                         </View>
                     </View>
                 </View>
@@ -146,9 +147,9 @@ const OrderItem = ({ data }) => {
                         <Image style={styles.picture} source={{ uri: data.image }} />
                     </View>
                     <View style={styles.detailsContainer}>
-                        <Text style={styles.label}>Product Name : {data.productName}</Text>
-                        <Text style={styles.label}>Status : {data.status}</Text>
-                        <Text style={styles.label}>Date : {new Date(data.date).toDateString()}</Text>
+                        <Text style={styles.label}>{i18n.t('productName')} : {data.productName}</Text>
+                        <Text style={styles.label}>{i18n.t('status')} : {i18n.t(data.status)}</Text>
+                        <Text style={styles.label}>{i18n.t('date')} : {new Date(data.date).toDateString()}</Text>
                     </View>
                 </View>
                 <TouchableOpacity style={[styles.sideArrow, {

@@ -5,25 +5,26 @@ import History from '../Screens/MainScreens/History';
 import Settings from '../Screens/MainScreens/Settings';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from '@expo/vector-icons';
+import { i18n } from '../Utils/i18n/supportedLanguages';
 
 const Tab = createBottomTabNavigator();
 
 const MainNavigation = () => {
     return (
-        <Tab.Navigator initialRouteName="Home" screenOptions={({ route }) => ({
+        <Tab.Navigator initialRouteName={i18n.t('home')} screenOptions={({ route }) => ({
             tabBarIcon: ({ color, size }) => {
                 let iconName;
                 switch (route.name) {
-                    case 'Home':
+                    case i18n.t('home'):
                         iconName = 'home';
                         break;
-                    case 'Orders':
+                    case i18n.t('orders'):
                         iconName = 'hdd';
                         break;
-                    case 'History':
+                    case i18n.t('history'):
                         iconName = 'sync';
                         break;
-                    case 'Settings':
+                    case i18n.t('settings'):
                         iconName = 'setting'
                         break;
                 }
@@ -34,10 +35,10 @@ const MainNavigation = () => {
             tabBarInactiveTintColor: 'gray',
             headerShown: false,
         })}>
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Orders" component={Orders} />
-            <Tab.Screen name="History" component={History} />
-            <Tab.Screen name="Settings" component={Settings} />
+            <Tab.Screen name={i18n.t('home')} component={Home} />
+            <Tab.Screen name={i18n.t('orders')} component={Orders} />
+            <Tab.Screen name={i18n.t('history')} component={History} />
+            <Tab.Screen name={i18n.t('settings')} component={Settings} />
         </Tab.Navigator>
     )
 }

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeFilter } from '../../Actions/FilterActions';
 import { loadOrders } from '../../Actions/OrdersActions'
 import axios from 'axios';
+import { i18n } from '../../Utils/i18n/supportedLanguages';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
@@ -57,32 +58,32 @@ const Home = ({ navigation }) => {
                 borderTopLeftRadius: 35,
                 borderTopRightRadius: 35
             }}>
-                < CubeButton title="Open"
+                < CubeButton title={i18n.t('open')}
                     value={orders.orders.filter((order) => {
                         return order.status === "open"
                     }).length}
                     color="#FFA8A8"
                     onPress={() => {
                         dispatch(changeFilter('open', 1));
-                        navigation.navigate("Orders")
+                        navigation.navigate(i18n.t('orders'))
                     }} />
-                < CubeButton title="Pending"
+                < CubeButton title={i18n.t('pending')}
                     value={orders.orders.filter((order) => {
                         return order.status === "pending"
                     }).length}
                     color="#FFFFAE"
                     onPress={() => {
                         dispatch(changeFilter('pending', 1));
-                        navigation.navigate("Orders")
+                        navigation.navigate(i18n.t('orders'))
                     }} />
-                < CubeButton title="Arrived"
+                < CubeButton title={i18n.t('arrived')}
                     value={orders.orders.filter((order) => {
                         return order.status === "arrived"
                     }).length}
                     color="#ABE2C5"
                     onPress={() => {
                         dispatch(changeFilter('arrived', 1));
-                        navigation.navigate("Orders")
+                        navigation.navigate(i18n.t('orders'))
                     }} />
             </View >
         </ImageBackground>

@@ -6,6 +6,7 @@ import { register } from '../Actions/UserActions';
 import Constants from 'expo-constants';
 import axios from 'axios';
 import Button from './Button';
+import { i18n } from '../Utils/i18n/supportedLanguages';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
@@ -31,8 +32,8 @@ const LoginForm = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={{ alignSelf: 'center', marginBottom: 40, fontSize: 30, fontFamily: 'VarelaRound' }}>Register</Text>
-            <Text style={styles.label}>Email</Text>
+            <Text style={{ alignSelf: 'center', marginBottom: 40, fontSize: 30, fontFamily: 'VarelaRound' }}>{i18n.t('register')}</Text>
+            <Text style={styles.label}>{i18n.t('email')}</Text>
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
@@ -49,12 +50,12 @@ const LoginForm = () => {
                 name="email"
                 rules={{ required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ }}
             />
-            {errors.email?.type === 'required' && <Text style={styles.error}>Email is required</Text>}
-            {errors.email?.type === 'pattern' && <Text style={styles.error}>Wrong email address</Text>}
+            {errors.email?.type === 'required' && <Text style={styles.error}>{i18n.t('emailRequired')}</Text>}
+            {errors.email?.type === 'pattern' && <Text style={styles.error}>{i18n.t('emailWrong')}</Text>}
 
             <View style={styles.row}>
                 <View style={{ flex: 4 }}>
-                    <Text style={styles.label}>Branch Name</Text>
+                    <Text style={styles.label}>{i18n.t('branchName')}</Text>
                     <Controller
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
@@ -68,12 +69,12 @@ const LoginForm = () => {
                         name="branch_name"
                         rules={{ required: true }}
                     />
-                    {errors.branch_name?.type === 'required' && <Text style={styles.error}>Branch name is required</Text>}
+                    {errors.branch_name?.type === 'required' && <Text style={styles.error}>{i18n.t('branchNameRequired')}</Text>}
                 </View>
                 <View style={{ flex: 1 }}></View>
 
                 <View style={{ flex: 4 }}>
-                    <Text style={styles.label}>Branch Number</Text>
+                    <Text style={styles.label}>{i18n.t('branchNumber')}</Text>
                     <Controller
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
@@ -88,11 +89,11 @@ const LoginForm = () => {
                         name="branch_number"
                         rules={{ required: true }}
                     />
-                    {errors.branch_number?.type === 'required' && <Text style={styles.error}>Branch number is required</Text>}
+                    {errors.branch_number?.type === 'required' && <Text style={styles.error}>{i18n.t('branchNumberRequired')}</Text>}
                 </View>
 
             </View>
-            <Text style={styles.label}>Password</Text>
+            <Text style={styles.label}>{i18n.t('password')}</Text>
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
@@ -107,9 +108,9 @@ const LoginForm = () => {
                 name="password"
                 rules={{ required: true }}
             />
-            {errors.password?.type === 'required' && <Text style={styles.error}>Password is required</Text>}
+            {errors.password?.type === 'required' && <Text style={styles.error}>{i18n.t('passwordRequired')}</Text>}
 
-            <Button title="Register" onPress={handleSubmit(onSubmit)} style={{ marginTop: 40 }} />
+            <Button title={i18n.t('register')} onPress={handleSubmit(onSubmit)} style={{ marginTop: 40 }} />
         </View>
     );
 }

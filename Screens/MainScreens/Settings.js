@@ -5,6 +5,7 @@ import { saveSettings } from '../../Actions/SettingsActions'
 import Button from '../../Components/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons';
+import { i18n } from '../../Utils/i18n/supportedLanguages'
 
 const Settings = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -16,14 +17,14 @@ const Settings = ({ navigation }) => {
         <ImageBackground source={require('../../assets/backgrounds/background2.png')} style={{ flex: 1 }} resizeMode='cover'>
             <ScrollView>
                 <View>
-                    <Text style={styles.title}>Settings Page</Text>
+                    <Text style={styles.title}>{i18n.t('settings')}</Text>
                     <View style={styles.container}>
                         <View style={styles.containerHeader}>
-                            <Text style={styles.containerHeaderLabel}>Genral</Text>
+                            <Text style={styles.containerHeaderLabel}>{i18n.t('genral')}</Text>
                             <View style={styles.seprator}></View>
                         </View>
                         <View>
-                            <Text style={styles.label}>Max number of orders</Text>
+                            <Text style={styles.label}>{i18n.t('maxNumberOfOrders')}</Text>
                             <TextInput
                                 value={maxOrdersField.toString()}
                                 style={styles.input}
@@ -31,7 +32,7 @@ const Settings = ({ navigation }) => {
                                 onChangeText={text => setMaxOrders(text)} />
                         </View>
                         <View>
-                            <Text style={styles.label}>Auto delete after (days) :</Text>
+                            <Text style={styles.label}>{i18n.t('autoDeleteAfter')}:</Text>
                             <TextInput
                                 value={autoDeleteField.toString()}
                                 style={styles.input}
@@ -43,7 +44,7 @@ const Settings = ({ navigation }) => {
 
                     <View style={styles.container}>
                         <View style={styles.containerHeader}>
-                            <Text style={styles.containerHeaderLabel}>Help</Text>
+                            <Text style={styles.containerHeaderLabel}>{i18n.t('help')}</Text>
                             <View style={styles.seprator}></View>
                         </View>
                         <View>
@@ -65,11 +66,11 @@ const Settings = ({ navigation }) => {
 
             </ScrollView>
             <View style={styles.buttonsContainer}>
-                <Button title="Logout" onPress={() => {
+                <Button title={i18n.t('logout')} onPress={() => {
                     dispatch(signOut());
                 }} />
 
-                <Button title="Save" onPress={() => {
+                <Button title={i18n.t('save')} onPress={() => {
                     dispatch(saveSettings(maxOrdersField, autoDeleteField));
                 }} />
             </View>
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 22,
         fontFamily: 'VarelaRound',
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-start'
     },
     label: {
         color: 'black',

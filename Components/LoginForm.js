@@ -6,6 +6,7 @@ import Constants from 'expo-constants';
 import { signIn } from '../Actions/UserActions'
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { i18n } from '../Utils/i18n/supportedLanguages';
 
 const apiPath = "http://192.168.1.230:3000/api";
 
@@ -29,8 +30,8 @@ const LoginForm = ({ moveToRegister }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={{ alignSelf: 'center', marginBottom: 40, fontSize: 30, fontFamily: 'VarelaRound' }}>Login</Text>
-            <Text style={styles.label}>Email</Text>
+            <Text style={{ alignSelf: 'center', marginBottom: 40, fontSize: 30, fontFamily: 'VarelaRound' }}>{i18n.t('loginTitle')}</Text>
+            <Text style={styles.label}>{i18n.t('email')}</Text>
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
@@ -47,10 +48,10 @@ const LoginForm = ({ moveToRegister }) => {
                 name="email"
                 rules={{ required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ }}
             />
-            {errors.email?.type === 'required' && <Text style={styles.error}>Email is required</Text>}
-            {errors.email?.type === 'pattern' && <Text style={styles.error}>Wrong email address</Text>}
+            {errors.email?.type === 'required' && <Text style={styles.error}>{i18n.t('emailRequired')}</Text>}
+            {errors.email?.type === 'pattern' && <Text style={styles.error}>{i18n.t('emailWrong')}</Text>}
 
-            <Text style={styles.label}>Password</Text>
+            <Text style={styles.label}>{i18n.t('password')}</Text>
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
@@ -65,13 +66,13 @@ const LoginForm = ({ moveToRegister }) => {
                 name="password"
                 rules={{ required: true }}
             />
-            {errors.password?.type === 'required' && <Text style={styles.error}>Password is required</Text>}
+            {errors.password?.type === 'required' && <Text style={styles.error}>{i18n.t('passwordRequired')}</Text>}
 
-            <Button title="Login" onPress={handleSubmit(onSubmit)} style={{ marginTop: 40 }} />
+            <Button title={i18n.t('login')} onPress={handleSubmit(onSubmit)} style={{ marginTop: 40 }} />
 
             <TouchableOpacity style={styles.textButton}
                 onPress={moveToRegister}>
-                <Text style={[styles.buttonText, { color: 'white' }]}>Register</Text>
+                <Text style={[styles.buttonText, { color: 'white' }]}>{i18n.t('register')}</Text>
             </TouchableOpacity>
         </View>
     );

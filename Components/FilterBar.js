@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { changeFilter } from '../Actions/FilterActions'
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import { Picker } from '@react-native-picker/picker';
+import { i18n } from '../Utils/i18n/supportedLanguages';
 
 const FilterBar = () => {
     const filter = useSelector(state => state.filter);
@@ -17,7 +18,7 @@ const FilterBar = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={{ flex: 1, textAlign: 'center' }}>Filter by</Text>
+            <Text style={{ flex: 1, textAlign: 'center' }}>{i18n.t('filterBy')}</Text>
             <View style={styles.picker}>
                 <Picker
                     mode='dropdown'
@@ -26,14 +27,14 @@ const FilterBar = () => {
                         setValue(itemValue)
                         dispatch(changeFilter(itemValue, order));
                     }}>
-                    <Picker.Item label="All" value="all" />
-                    <Picker.Item label="Open" value="open" />
-                    <Picker.Item label="Pending" value="pending" />
-                    <Picker.Item label="Arrived" value="arrived" />
+                    <Picker.Item label={i18n.t('all')} value="all" />
+                    <Picker.Item label={i18n.t('open')} value="open" />
+                    <Picker.Item label={i18n.t('pending')} value="pending" />
+                    <Picker.Item label={i18n.t('arrived')} value="arrived" />
                 </Picker>
             </View>
             <SegmentedControl
-                values={['Up', 'Down']}
+                values={[i18n.t('up'), i18n.t('down')]}
                 selectedIndex={order}
                 onChange={(event) => {
                     setOrder(event.nativeEvent.selectedSegmentIndex);
