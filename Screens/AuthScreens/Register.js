@@ -20,8 +20,7 @@ export default Register
 const styles = StyleSheet.create({
     back: {
         position: 'absolute',
-        right: 0,
-        left: 0,
+        start: 0,
         marginTop: 60,
         marginHorizontal: 60,
         flexDirection: 'row-reverse',
