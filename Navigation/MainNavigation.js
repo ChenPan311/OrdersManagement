@@ -1,7 +1,6 @@
 import React from 'react'
 import Home from '../Screens/MainScreens/Home';
 import Orders from '../Screens/MainScreens/Orders';
-import History from '../Screens/MainScreens/History';
 import Settings from '../Screens/MainScreens/Settings';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from '@expo/vector-icons';
@@ -21,9 +20,6 @@ const MainNavigation = () => {
                     case i18n.t('orders'):
                         iconName = 'hdd';
                         break;
-                    case i18n.t('history'):
-                        iconName = 'sync';
-                        break;
                     case i18n.t('settings'):
                         iconName = 'setting'
                         break;
@@ -37,7 +33,6 @@ const MainNavigation = () => {
         })}>
             <Tab.Screen name={i18n.t('home')} component={Home} />
             <Tab.Screen name={i18n.t('orders')} component={Orders} />
-            <Tab.Screen name={i18n.t('history')} component={History} />
             <Tab.Screen name={i18n.t('settings')} component={Settings} />
         </Tab.Navigator>
     )
