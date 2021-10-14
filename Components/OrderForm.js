@@ -31,7 +31,7 @@ const OrderForm = ({ sheetRef }) => {
             productName: "",
             isPaid: 1,
             paymentMethod: 2,
-            image: "",
+            image: "https://www.ub-law.co.il/wp-content/uploads/2021/02/placeholder.png",
             status: "open",
         }
     });
@@ -68,7 +68,6 @@ const OrderForm = ({ sheetRef }) => {
     const getDetails = () => {
         axios.post(`${apiPath}/utils/get_product_details`, { 'catalogNumber': getValues('catalogNumber') })
             .then((response) => {
-                // console.log(response.data);
                 const { image, name } = response.data;
                 setValue('productName', name);
                 setValue('image', image.trim());
@@ -76,7 +75,7 @@ const OrderForm = ({ sheetRef }) => {
             }).catch(err => alert(err.message));
     }
 
-    const [image, setImgae] = useState('https://megasport.co.il/pub/media/catalog/product/cache/4161146eb64d6ce2b25df18919b6fded/_/t/_tensaur_run_c_11_.jpg');
+    const [image, setImgae] = useState('https://www.ub-law.co.il/wp-content/uploads/2021/02/placeholder.png');
 
     return (
         <ScrollView>
@@ -269,7 +268,7 @@ const styles = StyleSheet.create({
     label: {
         color: 'black',
         fontSize: 16,
-        marginTop: 20,
+        marginTop: 10,
         fontFamily: 'VarelaRound'
     },
     container: {
