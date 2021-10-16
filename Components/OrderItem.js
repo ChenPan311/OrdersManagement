@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, LayoutAnimation, Platform, UIManager } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import DropDownPicker from 'react-native-dropdown-picker';
 import IconButton from './IconButton';
@@ -19,6 +19,10 @@ const COLORS = {
 const apiPath = "http://192.168.1.230:3000/api";
 
 const OrderItem = ({ data }) => {
+
+    if (Platform.OS === 'android') {
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
 
     const [expend, setExpended] = useState(false);
     const [open, setOpen] = useState(false);
@@ -91,7 +95,7 @@ const OrderItem = ({ data }) => {
                         </View>
                         <View style={styles.row}>
                             <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('paymentMethod')}</Text>
-                            <Text style={[styles.label, { flex: 1 }]}>{data.paymentMethod}</Text>
+                            <Text style={[styles.label, { flex: 1 }]}>{i18n.t(data.paymentMethod)}</Text>
                         </View>
                         <View style={styles.row}>
                             <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('clientName')} </Text>
@@ -135,7 +139,10 @@ const OrderItem = ({ data }) => {
                         COLORS.OPEN : data.status === 'pending' ?
                             COLORS.PENDING : COLORS.ARRIVED
                 }]}
-                    onPress={() => setExpended(!expend)}>
+                    onPress={() => {
+                        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                        setExpended(!expend)
+                    }}>
                     <AntDesign name='upcircle' size={24} />
                 </TouchableOpacity>
             </Animated.View>
@@ -157,7 +164,10 @@ const OrderItem = ({ data }) => {
                         COLORS.OPEN : data.status === 'pending' ?
                             COLORS.PENDING : COLORS.ARRIVED
                 }]}
-                    onPress={() => setExpended(!expend)} >
+                    onPress={() => {
+                        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                        setExpended(!expend)
+                    }} >
                     <AntDesign name='downcircle' size={24} style={{ marginEnd: 5 }} />
                 </TouchableOpacity>
             </Animated.View>
