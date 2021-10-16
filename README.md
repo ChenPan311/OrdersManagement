@@ -7,4 +7,5 @@ Simple management app for buisness orders, keep track on your orders and update 
 * State management with Redux.
 * Server side with NodeJS, Express.
 * Login flow with JWT.
-* Database : MongoDB
+* Database : MongoDB.
+* Localization to English, Hebrew.
