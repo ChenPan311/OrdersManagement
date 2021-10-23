@@ -9,7 +9,6 @@ const RootNavigation = () => {
     const [logged, setLogged] = useState(token ? true : false);
 
     useEffect(() => {
-        console.log("called");
         isLogged();
     }, [token]);
 

@@ -42,7 +42,6 @@ const OrderItem = ({ data }) => {
             headers: { 'auth-token': user.token }
         })
             .then((response) => {
-                console.log("update " + response.data._id);
                 dispatch(updateOrder(data._id, dropdownValue));
                 Toast.show(i18n.t('orderUpdated'), {
                     duration: Toast.durations.SHORT,
@@ -60,7 +59,6 @@ const OrderItem = ({ data }) => {
             headers: { 'auth-token': user.token }
         })
             .then((response) => {
-                console.log("delete " + response.data);
                 setAnimation();
                 dispatch(deleteOrder(data._id));
                 Toast.show(i18n.t('orderDeleted'), {
