@@ -83,7 +83,7 @@ const OrderItem = ({ data }) => {
                         <View style={{ flex: 1, marginStart: 10, justifyContent: 'center' }}>
                             <Text style={styles.label}>{data.productName}</Text>
                             <Text style={styles.label}>{data.catalogNumber}</Text>
-                            <Text style={styles.label}>{i18n.t('size')} : {data.size}</Text>
+                            <Text style={styles.label}>{data.size ? i18n.t('size') + ' :' : ''} {data.size}</Text>
                         </View>
                     </View>
                     <View style={[styles.detailsContainer, { marginTop: 10 }]}>
