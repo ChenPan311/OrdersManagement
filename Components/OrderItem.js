@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, LayoutAnimation, Platform, UIManager } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, LayoutAnimation, Platform, UIManager, Linking } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import DropDownPicker from 'react-native-dropdown-picker';
 import IconButton from './IconButton';
@@ -102,6 +102,9 @@ const OrderItem = ({ data }) => {
                         <View style={styles.row}>
                             <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('phoneNumber')}</Text>
                             <Text style={[styles.label, { flex: 1 }]}>{data.phoneNumber}</Text>
+                            <AntDesign name='phone' size={24} style={{ marginEnd: 10 }} onPress={() => {
+                                Linking.openURL(`tel:${data.phoneNumber}`);
+                            }} />
                         </View>
                         <View style={styles.row}>
                             <Text style={[styles.label, { flex: 1, color: 'gray', }]}>{i18n.t('address')}</Text>

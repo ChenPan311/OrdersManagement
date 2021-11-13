@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { filterOrders } from '../../Actions/OrdersActions'
 import { AntDesign } from '@expo/vector-icons'
 import FilterBar from '../../Components/FilterBar'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { i18n } from '../../Utils/i18n/supportedLanguages'
 
 if (Platform.OS === 'android') {
@@ -41,14 +40,6 @@ const Orders = () => {
         <ImageBackground source={require('../../assets/backgrounds/background2.png')} style={{ flex: 1 }}>
             <StatusBar barStyle='light-content' />
             <Text style={styles.title}>{i18n.t('orders')}</Text>
-            {/* <Button title="Wipe" onPress={() => {
-                AsyncStorage.getAllKeys()
-                    .then(keys => AsyncStorage.multiRemove(keys))
-                    .then(() => alert('success'));
-            }} /> */}
-            {/* <Button title="State" onPress={() => {
-                console.log(orders);
-            }} /> */}
             <FilterBar />
             <BottomSheet ref={sheetRef}
                 snapPoints={[450, 300, 0]}
